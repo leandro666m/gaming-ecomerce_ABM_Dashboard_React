@@ -58,5 +58,25 @@ export function useDashboardData() {
     setGames((current) => current.filter((game) => game.id !== id));
   };
 
-  return { games, platforms, users, orders, notice, setNotice, saveGame, saveUser, removeGame };
+  const savePlatform = async (values) => {
+    try {
+      const created = await request('/platforms', { method: 'POST', body: JSON.stringify(values) });
+      setPlatforms((current) => [created, ...current]);
+      setNotice('Plataforma creada correctamente.');
+    } catch {
+      setPlatforms((current) => [{ ...values, id: Date.now() }, ...current]);
+      setNotice('Plataforma guardada localmente. No se pudo conectar al backend.');
+    }
+  };
+
+  const removePlatform = async (id) => {
+    try {
+      await request(`/platforms/${id}`, { method: 'DELETE' });
+    } catch {
+      setNotice('La plataforma tiene juegos asociados.');
+    }
+    setPlatforms((current) => current.filter((platform) => platform.id !== id));
+  };
+
+  return { games, platforms, users, orders, notice, setNotice, saveGame, saveUser, removeGame, savePlatform, removePlatform };
 }

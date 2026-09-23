@@ -6,17 +6,33 @@ export function AdminLayout({ navigation, activeSection, onNavigate, title, acti
   return (
     <Page>
       <Sidebar>
-        <Brand><Gamepad2 size={24} /> GAMING<span>ABM</span></Brand>
-        <Nav>{navigation.map(({ key, icon: Icon, label }) => <NavItem key={key} $active={activeSection === key} onClick={() => onNavigate(key)}><Icon size={18} />{label}</NavItem>)}</Nav>
-        <SidebarFooter>Panel de administración<br /><small>API: {apiUrl || 'no configurada'}</small></SidebarFooter>
+        <Brand>
+          <Gamepad2 size={24} />
+           GAMING<span>ABM</span>
+        </Brand>
+
+        <Nav>{navigation.map(({ key, icon: Icon, label }) => 
+          <NavItem key={key} $active={activeSection === key} onClick={() => onNavigate(key)}><Icon size={18} />{label}</NavItem>)}
+        </Nav>
+
+        <SidebarFooter>Panel de administración<br />
+          <small>API: {apiUrl || 'no configurada'}</small>
+        </SidebarFooter>
       </Sidebar>
+
       <Main>
-        {notice && <Notice onClick={onDismiss}>{notice}<X size={16} /></Notice>}
+        {notice && <Notice onClick={onDismiss}>
+          {notice} <X size={16} />
+          </Notice>}
         <Header>
           <div><Eyebrow>TIENDA GAMING</Eyebrow><h1>{title}</h1></div>
-          {action && <HeaderAction onClick={action.onClick}><Plus size={18} />{action.label}</HeaderAction>}
+          {action && <HeaderAction onClick={action.onClick}>
+            <Plus size={18} />{action.label}
+            </HeaderAction>}
         </Header>
+
         {children}
+        
       </Main>
     </Page>
   );
