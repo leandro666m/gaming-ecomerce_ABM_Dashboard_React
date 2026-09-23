@@ -1,0 +1,7 @@
+[
+  { "username": "guille.gamer", "email": "guille.gamer@example.com", "password": "Gaming123!", "firstName": "Guillermo", "lastName": "Franccella" },
+  { "username": "gaby.play", "email": "gaby.play@example.com", "password": "Gaming123!", "firstName": "Gabriela", "lastName": "Comparin" },
+  { "username": "luisi.rpg", "email": "luisi.rpg@example.com", "password": "Gaming123!", "firstName": "Luisana", "lastName": "Lopilato" },
+  { "username": "juli.switch", "email": "juli.switch@example.com", "password": "Gaming123!", "firstName": "Julieta", "lastName": "Prandi" },
+  { "username": "admin.gaming", "email": "admin@gamingecommerce.local", "password": "Admin123!", "firstName": "Admin", "lastName": "Gaming" }
+]

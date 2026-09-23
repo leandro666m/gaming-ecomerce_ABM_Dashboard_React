@@ -1,0 +1,7 @@
+[
+  { "name": "PlayStation", "slug": "playstation" },
+  { "name": "Xbox", "slug": "xbox" },
+  { "name": "PC", "slug": "pc" },
+  { "name": "Nintendo Switch", "slug": "nintendo-switch" },
+  { "name": "Sega", "slug": "sega" }
+]

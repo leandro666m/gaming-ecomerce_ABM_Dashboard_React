@@ -1,0 +1,6 @@
+[
+  { "quantity": 1, "unitPrice": 69.99, "subtotal": 69.99, "discount": 15 },
+  { "quantity": 1, "unitPrice": 59.99, "subtotal": 59.99, "discount": 0 },
+  { "quantity": 1, "unitPrice": 24.99, "subtotal": 24.99, "discount": 10 },
+  { "quantity": 1, "unitPrice": 59.99, "subtotal": 59.99, "discount": 0 }
+]

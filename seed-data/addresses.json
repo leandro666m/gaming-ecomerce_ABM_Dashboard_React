@@ -1,0 +1,5 @@
+[
+  { "name": "Casa", "address": "Av. Santa Fe 1450", "city": "Buenos Aires", "state": "Buenos Aires", "postalCode": "C1060", "phone": "+5491122334455" },
+  { "name": "Departamento", "address": "Córdoba 850", "city": "Rosario", "state": "Santa Fe", "postalCode": "S2000", "phone": "+543414445566" },
+  { "name": "Casa", "address": "San Martín 220", "city": "Córdoba", "state": "Córdoba", "postalCode": "X5000", "phone": "+543514445566" }
+]

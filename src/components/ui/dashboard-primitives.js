@@ -1,0 +1,27 @@
+import styled from 'styled-components';
+
+export const Stats = styled.div`display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:44px;`;
+export const StatCard = styled.div`background:${({ theme }) => theme.colors.surface}; border:1px solid ${({ theme }) => theme.colors.border}; border-radius:14px; padding:20px; display:flex; align-items:center; gap:15px;`;
+export const StatIcon = styled.div`width:42px; height:42px; display:grid; place-items:center; border-radius:11px; color:${({ color, theme }) => theme.colors[color]}; background:${({ color, theme }) => `${theme.colors[color]}18`};`;
+export const StatLabel = styled.div`color:${({ theme }) => theme.colors.muted}; font-size:13px;`;
+export const StatValue = styled.div`font-size:25px; font-weight:800; margin-top:4px;`;
+export const SectionHeader = styled.div`display:flex; justify-content:space-between; align-items:end; margin-bottom:16px; h2{margin:0 0 5px;} p{margin:0;color:${({ theme }) => theme.colors.muted};font-size:14px;}`;
+export const SearchBox = styled.div`display:flex; gap:9px; align-items:center; background:${({ theme }) => theme.colors.surface}; border:1px solid ${({ theme }) => theme.colors.border}; border-radius:9px; padding:0 12px; color:${({ theme }) => theme.colors.muted}; input{width:190px;border:0;outline:0;padding:11px 0;color:${({ theme }) => theme.colors.text};background:transparent;}`;
+export const TableCard = styled.div`overflow:auto; background:${({ theme }) => theme.colors.surface}; border:1px solid ${({ theme }) => theme.colors.border}; border-radius:14px;`;
+export const Table = styled.table`border-collapse:collapse; width:100%; min-width:680px; th,td{padding:15px 20px;text-align:left;border-bottom:1px solid ${({ theme }) => theme.colors.border};font-size:14px;white-space:nowrap;} th{color:${({ theme }) => theme.colors.muted};font-size:11px;text-transform:uppercase;letter-spacing:.08em;} tr:last-child td{border-bottom:0;}`;
+export const Badge = styled.span`padding:5px 9px;border-radius:6px;color:${({ theme }) => theme.colors.secondary};background:#22d3ee18;font-size:12px;`;
+export const Empty = styled.div`padding:30px;text-align:center;color:${({ theme }) => theme.colors.muted};`;
+export const GameCell = styled.div`display:flex;align-items:center;gap:12px;`;
+export const CoverPlaceholder = styled.div`width:34px;height:45px;display:grid;place-items:center;border-radius:4px;color:${({ theme }) => theme.colors.muted};background:${({ theme }) => theme.colors.surfaceMuted};`;
+export const IconButton = styled.button`border:0;background:transparent;color:${({ theme }) => theme.colors.muted};cursor:pointer;padding:6px;`;
+export const SummaryGrid = styled.div`display:grid;grid-template-columns:repeat(3,1fr);`;
+export const Summary = styled.div`padding:28px;display:grid;gap:10px;color:${({ theme }) => theme.colors.muted};border-right:1px solid ${({ theme }) => theme.colors.border};cursor:${({ onClick }) => onClick ? 'pointer' : 'default'};&:last-child{border:0;}strong{color:${({ theme }) => theme.colors.text};font-size:18px;}`;
+export const CardGrid = styled.div`display:grid;grid-template-columns:repeat(4,1fr);gap:16px;`;
+export const PlatformCard = styled.div`padding:22px;background:${({ theme }) => theme.colors.surface};border:1px solid ${({ theme }) => theme.colors.border};border-radius:14px;display:grid;gap:10px;color:${({ theme }) => theme.colors.secondary};strong{color:${({ theme }) => theme.colors.text};}small{color:${({ theme }) => theme.colors.muted};}`;
+export const Overlay = styled.div`position:fixed;inset:0;display:grid;place-items:center;padding:20px;background:#050816aa;z-index:2;`;
+export const ModalBox = styled.div`width:min(700px,100%);max-height:90vh;overflow:auto;padding:28px;border:1px solid ${({ theme }) => theme.colors.border};border-radius:16px;background:${({ theme }) => theme.colors.surface};`;
+export const ModalHeader = styled.div`display:flex;justify-content:space-between;align-items:start;margin-bottom:26px;h2{margin:6px 0 0;}`;
+export const Close = styled.button`border:0;background:transparent;color:${({ theme }) => theme.colors.muted};cursor:pointer;padding:4px;`;
+export const FormGrid = styled.div`display:grid;grid-template-columns:1fr 1fr;gap:16px;label{display:grid;gap:7px;color:${({ theme }) => theme.colors.muted};font-size:13px;}.wide{grid-column:1 / -1;}input,select,textarea{width:100%;padding:11px;color:${({ theme }) => theme.colors.text};background:${({ theme }) => theme.colors.surfaceMuted};border:1px solid ${({ theme }) => theme.colors.border};border-radius:8px;outline:0;resize:vertical;}`;
+export const ModalActions = styled.div`display:flex;justify-content:end;gap:10px;margin-top:28px;`;
+export const SecondaryButton = styled.button`padding:11px 16px;border:1px solid ${({ theme }) => theme.colors.border};border-radius:9px;color:${({ theme }) => theme.colors.text};background:transparent;cursor:pointer;`;

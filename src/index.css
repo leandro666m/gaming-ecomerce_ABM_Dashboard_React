@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width: 900px) {
+  #root > div { display: block; }
+  aside { width: 100% !important; }
+  aside nav { margin-top: 24px !important; grid-template-columns: repeat(3, 1fr); }
+  aside nav button { justify-content: center; }
+  aside > div:last-child { display: none; }
+  main { padding: 28px 22px !important; }
+  main > header { margin-bottom: 26px !important; }
+  main > header h1 { font-size: 28px; }
+}
+
+@media (max-width: 640px) {
+  main > header { align-items: flex-start; gap: 15px; flex-direction: column; }
+  main > header button { width: 100%; justify-content: center; }
+  main section, main > div > div { display: block; }
+  main section > div:last-child { margin-top: 15px; }
+  main section input { width: 100%; }
+  main [class*="Stats"] { grid-template-columns: 1fr; margin-bottom: 28px; }
+  main [class*="SummaryGrid"], main [class*="CardGrid"] { grid-template-columns: 1fr; }
+  main [class*="Summary"] { border-right: 0; border-bottom: 1px solid #283758; }
+  main [class*="Summary"]:last-child { border-bottom: 0; }
+  main [class*="FormGrid"] { grid-template-columns: 1fr; }
+  main [class*="FormGrid"] .wide { grid-column: auto; }
+}

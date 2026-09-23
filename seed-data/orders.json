@@ -1,0 +1,5 @@
+[
+  { "totalPayment": 69.99, "paymentId": "PAY-202609-001", "shippingName": "Lucas Gómez", "shippingAddress": "Av. Santa Fe 1450", "shippingCity": "Buenos Aires", "shippingState": "Buenos Aires", "shippingPostalCode": "C1060", "shippingPhone": "+5491122334455" },
+  { "totalPayment": 84.98, "paymentId": "PAY-202609-002", "shippingName": "Sofía Martínez", "shippingAddress": "Córdoba 850", "shippingCity": "Rosario", "shippingState": "Santa Fe", "shippingPostalCode": "S2000", "shippingPhone": "+543414445566" },
+  { "totalPayment": 59.99, "paymentId": "PAY-202609-003", "shippingName": "Martín Rossi", "shippingAddress": "San Martín 220", "shippingCity": "Córdoba", "shippingState": "Córdoba", "shippingPostalCode": "X5000", "shippingPhone": "+543514445566" }
+]
