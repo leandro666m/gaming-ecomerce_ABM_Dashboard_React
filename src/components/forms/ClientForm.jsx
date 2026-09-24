@@ -4,7 +4,7 @@ import { HeaderAction } from '../layout/HeaderAction';
 import { FormGrid, ModalActions, SecondaryButton } from '../ui/dashboard-primitives';
 
 
-export function UserForm({ onSubmit, onCancel }) {
+export function ClientForm({ onSubmit, onCancel }) {
   return <>
     <Formik
       initialValues={{ username: '', email: '', password: '', firstName: '', lastName: '' }}
