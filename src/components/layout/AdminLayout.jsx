@@ -1,6 +1,6 @@
 import { Gamepad2, Plus, X } from 'lucide-react';
 import styled from 'styled-components';
-import { apiUrl } from '../../API/client';
+import { apiUrl } from '../../API/request';
 
 export function AdminLayout({ navigation, activeSection, onNavigate, title, action, notice, onDismiss, children }) {
   return (

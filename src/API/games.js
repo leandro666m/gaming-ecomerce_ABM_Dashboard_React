@@ -1,4 +1,4 @@
-import { request } from './client';
+import { request } from './request';
 
 export function normalizeGamePayload(values) {
   return {
