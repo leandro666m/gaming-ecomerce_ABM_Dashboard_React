@@ -1,7 +1,7 @@
 import { Tag, Trash2 } from 'lucide-react';
 import { SectionHeader, CardGrid, PlatformCard, IconButton } from '../components/ui/dashboard-primitives';
 
-export default function PlatformsPage({ platforms }) {
+export default function PlatformsPage({ platforms, onDelete }) {
 
   const orderedPlatforms = [...(platforms ?? [])].sort(
     (firstPlatform, secondPlatform) => (firstPlatform.display_order ?? Number.MAX_SAFE_INTEGER)
