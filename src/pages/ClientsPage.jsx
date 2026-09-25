@@ -1,9 +1,30 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Search } from 'lucide-react';
+import { ClientForm } from '../components/forms/ClientForm';
+import { Modal } from '../components/forms/ModalForms';
+import { useAdminHeaderAction } from '../components/layout/AdminLayout';
 import { SectionHeader, SearchBox, TableCard, Table, Empty } from '../components/ui/dashboard-primitives';
 
-export default function ClientsPage({ clients }) {
+export default function ClientsPage({ clients, saveClient }) {
   const [query, setQuery] = useState('');
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const openClientForm = useCallback(() => setIsFormOpen(true), []);
+  const closeForm = useCallback(() => setIsFormOpen(false), []);
   const filtered = clients.filter((client) => `${client.firstName} ${client.lastName} ${client.username} ${client.email}`.toLowerCase().includes(query.toLowerCase()));
-  return <><SectionHeader><div><h2>Clientes</h2><p>Administrá las cuentas que compran en la tienda.</p></div><SearchBox><Search size={17} /><input placeholder="Buscar cliente..." value={query} onChange={(event) => setQuery(event.target.value)} /></SearchBox></SectionHeader><TableCard><Table><thead><tr><th>Nombre</th><th>Usuario</th><th>Email</th><th>ID</th></tr></thead><tbody>{filtered.map((client) => <tr key={client.id}><td><strong>{client.firstName} {client.lastName}</strong></td><td>{client.username}</td><td>{client.email}</td><td>#{client.id}</td></tr>)}</tbody></Table>{!filtered.length && <Empty>No hay clientes cargados o no coinciden con la búsqueda.</Empty>}</TableCard></>;
+
+  useAdminHeaderAction(openClientForm, 'Nuevo cliente');
+
+  const handleSubmit = async (values, { resetForm }) => {
+    await saveClient(values);
+    resetForm();
+    closeForm();
+  };
+
+  return <>
+    <SectionHeader><div><h2>Clientes</h2><p>Administrá las cuentas que compran en la tienda.</p></div><SearchBox><Search size={17} /><input placeholder="Buscar cliente..." value={query} onChange={(event) => setQuery(event.target.value)} /></SearchBox></SectionHeader>
+    <TableCard><Table><thead><tr><th>Nombre</th><th>Usuario</th><th>Email</th><th>ID</th></tr></thead><tbody>{filtered.map((client) => <tr key={client.id}><td><strong>{client.firstName} {client.lastName}</strong></td><td>{client.username}</td><td>{client.email}</td><td>#{client.id}</td></tr>)}</tbody></Table>{!filtered.length && <Empty>No hay clientes cargados o no coinciden con la búsqueda.</Empty>}</TableCard>
+    {isFormOpen && <Modal title="Nuevo cliente" onClose={closeForm}>
+      <ClientForm onSubmit={handleSubmit} onCancel={closeForm} />
+    </Modal>}
+  </>;
 }

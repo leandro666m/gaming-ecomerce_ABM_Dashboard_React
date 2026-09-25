@@ -1,13 +1,27 @@
+import { useCallback, useState } from 'react';
 import { Tag, Trash2 } from 'lucide-react';
+import { PlatformForm } from '../components/forms/PlatformForm';
+import { Modal } from '../components/forms/ModalForms';
+import { useAdminHeaderAction } from '../components/layout/AdminLayout';
 import { SectionHeader, CardGrid, PlatformCard, IconButton } from '../components/ui/dashboard-primitives';
 
-export default function PlatformsPage({ platforms, onDelete }) {
+export default function PlatformsPage({ platforms, onDelete, savePlatform }) {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const openPlatformForm = useCallback(() => setIsFormOpen(true), []);
+  const closeForm = useCallback(() => setIsFormOpen(false), []);
 
   const orderedPlatforms = [...(platforms ?? [])].sort(
     (firstPlatform, secondPlatform) => (firstPlatform.display_order ?? Number.MAX_SAFE_INTEGER)
       - (secondPlatform.display_order ?? Number.MAX_SAFE_INTEGER),
   );
 
+  useAdminHeaderAction(openPlatformForm, 'Nueva plataforma');
+
+  const handleSubmit = async (values, { resetForm }) => {
+    await savePlatform(values);
+    resetForm();
+    closeForm();
+  };
 
   return <>
     <SectionHeader>
@@ -28,5 +42,9 @@ export default function PlatformsPage({ platforms, onDelete }) {
         <small>/{platform.slug}</small>
       </PlatformCard>)}
 
-    </CardGrid></>;
+    </CardGrid>
+    {isFormOpen && <Modal title="Nueva plataforma" onClose={closeForm}>
+      <PlatformForm onSubmit={handleSubmit} onCancel={closeForm} />
+    </Modal>}
+  </>;
 }
