@@ -23,6 +23,15 @@ export async function createGame(values) {
   });
 }
 
+export async function editGame(values) {
+  const payload = normalizeGamePayload(values);
+
+  return request(`/games/${payload.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
 export function deleteGame(id) {
   return request(`/games/${id}`, { method: 'DELETE' });
 }

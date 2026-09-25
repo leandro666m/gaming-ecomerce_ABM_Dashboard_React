@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createGame, deleteGame, fetchGames, normalizeGamePayload } from '../API/games';
+import { createGame, deleteGame, editGame, fetchGames, normalizeGamePayload } from '../API/games';
 import { fallbackGames } from '../API/seed-data';
 
 const API_FALLBACK_NOTICE = 'API no disponible: se muestran datos de ejemplo. Configurá VITE_API_URL para conectar el backend.';
@@ -26,6 +26,22 @@ export function useGames() {
     }
   };
 
+  const updateGame = async (values) => {
+    const localGame = normalizeGamePayload(values);
+    try {
+      const updated = await editGame(values);
+      setGames((current) => current.map((game) =>
+        game.id === values.id ? { ...localGame, ...updated } : game
+      ));
+      setNotice('Juego actualizado correctamente.');
+    } catch {
+      setGames((current) => current.map((game) =>
+        game.id === values.id ? localGame : game
+      ));
+      setNotice('Juego actualizado localmente. No se pudo conectar al backend.');
+    }
+  };
+
   const removeGame = async (id) => {
     try {
       await deleteGame(id);
@@ -35,5 +51,5 @@ export function useGames() {
     setGames((current) => current.filter((game) => game.id !== id));
   };
 
-  return { games, notice, setNotice, saveGame, removeGame };
+  return { games, notice, setNotice, saveGame, updateGame, removeGame };
 }

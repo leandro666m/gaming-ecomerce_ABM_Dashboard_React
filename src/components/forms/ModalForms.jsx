@@ -7,12 +7,12 @@ import { Overlay, ModalBox, ModalHeader, Close } from '../ui/dashboard-primitive
 export function Modal({ title, onClose, children }) {
   
   return <>
-  <Overlay onClick={onClose}>
+  <Overlay /* onClick={onClose} */>
     <ModalBox onClick={(event) => event.stopPropagation()}>
       <ModalHeader>
         <div>
-          <Eyebrow>NUEVO REGISTRO</Eyebrow> 
-          <h2>{title}</h2>
+          <Eyebrow> {title} </Eyebrow> 
+          {/* <h2>{title}</h2> */}
         </div>
 
         <Close onClick={onClose}> <X size={20}/> </Close>

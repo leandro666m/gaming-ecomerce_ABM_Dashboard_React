@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react';
-import { Image, Search, Trash2 } from 'lucide-react';
+import { Image, Pen, Search, Trash2 } from 'lucide-react';
 import { SectionHeader, SearchBox, TableCard, Table, GameCell, CoverPlaceholder, Badge, IconButton, Empty } from '../components/ui/dashboard-primitives';
 
-export default function GamesPage({ games, platforms, onDelete }) {
+
+export default function GamesPage({ games, platforms, onDelete, onEdit }) {
+
   const [query, setQuery] = useState('');
-  const filtered = useMemo(() => games.filter((game) => `${game.title} ${game.slug} ${platforms.find((platform) => platform.id === game.platformId)?.name || ''}`.toLowerCase().includes(query.toLowerCase())), [games, platforms, query]);
+  const filtered = useMemo(
+    () => games.filter((game) => 
+      `${game.title} ${game.slug} ${platforms.find( (platform) => platform.id === game.platformId)?.name || ''}`.toLowerCase().includes(query.toLowerCase()) )
+    , [games, platforms, query]);
   
   
   return <>
@@ -16,7 +21,7 @@ export default function GamesPage({ games, platforms, onDelete }) {
           <SearchBox>
             <Search size={17} />
               <input placeholder="Buscar juego..." value={query} onChange={(event) => setQuery(event.target.value)} />
-            </SearchBox>
+          </SearchBox>
     </SectionHeader>
     
     <TableCard>
@@ -31,11 +36,11 @@ export default function GamesPage({ games, platforms, onDelete }) {
             <th />
           </tr>
         </thead>
+
         <tbody>{filtered.map((game) =>
            <tr key={game.id}>
             <td>
-              <GameCell>{game.cover ? 
-                <img src={game.cover} alt="" /> : <CoverPlaceholder> <Image size={18} /> </CoverPlaceholder>}
+              <GameCell>{game.cover ? <img style={{maxWidth:'130px'}} src={game.cover} alt="" /> : <CoverPlaceholder> <Image size={18} /> </CoverPlaceholder>}
                 <strong>{game.title}</strong>
               </GameCell>
             </td>
@@ -43,8 +48,17 @@ export default function GamesPage({ games, platforms, onDelete }) {
             <td>${Number(game.price).toFixed(2)}</td>
             <td>{game.discount || 0}%</td>
             <td>{game.releaseDate || '—'}</td>
-            <td><IconButton onClick={() => onDelete(game.id)} aria-label="Eliminar juego"><Trash2 size={16} /></IconButton></td>
+            <td>
+              <IconButton onClick={() => onDelete(game.id)} aria-label="Eliminar juego"> <Trash2 size={16} /> </IconButton>
+              <IconButton onClick={() => onEdit(game.id)} aria-label="Editar juego"> <Pen size={16} /> </IconButton>
+            </td>
           </tr>)}
-        </tbody></Table>{!filtered.length && <Empty>No se encontraron juegos.</Empty>}
-        </TableCard></>;
+
+        </tbody>
+      </Table>
+      
+        {!filtered.length && <Empty>No se encontraron juegos.</Empty>}
+      
+    </TableCard>
+  </>
 }
