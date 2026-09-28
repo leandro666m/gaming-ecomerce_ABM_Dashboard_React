@@ -12,22 +12,30 @@ import PlatformsPage from '../../pages/PlatformsPage';
 import ClientsPage from '../../pages/ClientsPage';
 
 export function AdminShell() {
-  const location = useLocation();
+
   const navigate = useNavigate();
-  const gamesData = useGames();
-  const platformsData = usePlatforms();
-  const clientsData = useClients();
+  
   const ordersData = useOrders();
   const { orders } = ordersData;
+
+  const gamesData = useGames();
   const { games } = gamesData;
+
+  const platformsData = usePlatforms();
   const { platforms } = platformsData;
+
+  const clientsData = useClients();
   const { clients } = clientsData;
+  
+  const location = useLocation();
   const section = location.pathname.split('/')[1] || 'dashboard';
   const currentPage = navigationItems.find(({ key }) => key === section) || navigationItems[0];
+  
   const revenue = orders.reduce((sum, order) => sum + Number(order.totalPayment || 0), 0);
+
+  // Alertas
   const notices = [gamesData, platformsData, clientsData, ordersData];
   const notice = notices.find(({ notice: currentNotice }) => currentNotice)?.notice || '';
-
   const dismissNotice = () => notices.forEach(({ setNotice }) => setNotice(''));
 
   return (
@@ -49,20 +57,6 @@ export function AdminShell() {
             } 
         />
 
-        {/* JUEGOS */}
-        <Route
-          path="games"
-          element={(
-            <GamesPage
-              games={games}
-              platforms={platforms}
-              onDelete={(id) => window.confirm('¿Eliminar este juego?') && gamesData.removeGame(id)}
-              saveGame={gamesData.saveGame}
-              updateGame={gamesData.updateGame}
-            />
-          )}
-        />
-
         {/* PEDIDOS */}
         <Route 
           path="orders"
@@ -79,6 +73,20 @@ export function AdminShell() {
           }
         />
 
+        {/* JUEGOS */}
+        <Route
+          path="games"
+          element={(
+            <GamesPage
+              games={games}
+              platforms={platforms}
+              onDelete={(id) => window.confirm('¿Eliminar este juego?') && gamesData.removeGame(id)}
+              saveGame={gamesData.saveGame}
+              updateGame={gamesData.updateGame}
+            />
+          )}
+        />
+
         {/* PLATAFORMAS */}
         <Route
           path="platforms"
@@ -87,6 +95,7 @@ export function AdminShell() {
               platforms={platforms}
               onDelete={(id) => window.confirm('¿Eliminar esta plataforma?') && platformsData.removePlatform(id)}
               savePlatform={platformsData.savePlatform}
+              updatePlatform={platformsData.updatePlatform}
             />
           )}
         />

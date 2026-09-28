@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { createPlatform, deletePlatform, fetchPlatforms } from '../API/platforms';
+import { createPlatform, deletePlatform, fetchPlatforms, editPlatform } from '../API/platforms';
 import { fallbackPlatforms } from '../API/seed-data';
+
+const API_FALLBACK_NOTICE = 'API no disponible: se muestran datos de ejemplo. Configurá VITE_API_URL para conectar el backend.';
+
 
 export function usePlatforms() {
   const [platforms, setPlatforms] = useState(fallbackPlatforms);
@@ -9,7 +12,7 @@ export function usePlatforms() {
   useEffect(() => {
     fetchPlatforms()
       .then(setPlatforms)
-      .catch(() => setNotice('API no disponible: se muestran datos de ejemplo. Configurá VITE_API_URL para conectar el backend.'));
+      .catch(() => setNotice(API_FALLBACK_NOTICE));
   }, []);
 
   const savePlatform = async (values) => {
@@ -23,14 +26,29 @@ export function usePlatforms() {
     }
   };
 
+  const updatePlatform = async (values) => {
+    try {
+      const updated = await editPlatform(values);
+      setPlatforms((current) => current.map((platform) =>
+        platform.id === values.id ? { ...platform, ...updated } : platform
+      ));
+      setNotice('Plataforma actualizada correctamente.');
+    } catch {
+      setPlatforms((current) => current.map((platform) =>
+        platform.id === values.id ? { ...values, id: platform.id } : platform
+      ));
+      setNotice('Plataforma actualizada localmente. No se pudo conectar al backend.');
+    }
+  };
+
   const removePlatform = async (id) => {
     try {
       await deletePlatform(id);
+      setPlatforms((current) => current.filter((platform) => platform.id !== id));
     } catch {
       setNotice('La plataforma tiene juegos asociados.');
     }
-    setPlatforms((current) => current.filter((platform) => platform.id !== id));
   };
 
-  return { platforms, notice, setNotice, savePlatform, removePlatform };
+  return { platforms, notice, setNotice, savePlatform, removePlatform, updatePlatform };
 }

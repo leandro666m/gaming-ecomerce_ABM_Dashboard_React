@@ -11,20 +11,19 @@ export default function GamesPage({ games, platforms, onDelete, saveGame, update
   const [query, setQuery] = useState('');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingGameId, setEditingGameId] = useState(null);
-  const filtered = useMemo(
-    () => games.filter((game) => 
-      `${game.title} ${game.slug} ${platforms.find( (platform) => platform.id === game.platformId)?.name || ''}`.toLowerCase().includes(query.toLowerCase()) )
-    , [games, platforms, query]);
+  
   const editingGame = games.find((game) => game.id === editingGameId);
+  
   const openNewGameForm = useCallback(() => {
     setEditingGameId(null);
     setIsFormOpen(true);
   }, []);
+
   const closeForm = useCallback(() => {
     setEditingGameId(null);
     setIsFormOpen(false);
   }, []);
-
+  
   useAdminHeaderAction(openNewGameForm, 'Nuevo juego');
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -32,6 +31,11 @@ export default function GamesPage({ games, platforms, onDelete, saveGame, update
     resetForm();
     closeForm();
   };
+
+  const filtered = useMemo(
+    () => games.filter((game) => 
+      `${game.title} ${game.slug} ${platforms.find( (platform) => platform.id === game.platformId)?.name || ''}`.toLowerCase().includes(query.toLowerCase()) )
+    , [games, platforms, query]);
 
   return <>
     <SectionHeader>

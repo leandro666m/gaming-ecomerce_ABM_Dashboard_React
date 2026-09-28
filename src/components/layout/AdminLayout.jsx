@@ -31,7 +31,7 @@ export function AdminLayout({ navigation, activeSection, onNavigate, title, noti
           </Brand>
 
           <Nav>{navigation.map(({ key, icon: Icon, label }) =>
-            <NavItem key={key} $active={activeSection === key} onClick={() => onNavigate(key)}><Icon size={18} />{label}</NavItem>)}
+            <NavItem key={key} $active={activeSection === key} onClick={() => onNavigate(key)}>  <Icon size={18} />  {label}  </NavItem>)}
           </Nav>
 
           <SidebarFooter>Panel de administración<br />

@@ -11,6 +11,14 @@ export function createPlatform(values) {
   });
 }
 
+export async function editPlatform(values) {
+
+  return request(`/platforms/${values.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(values),
+  });
+}
+
 export function deletePlatform(id) {
   return request(`/platforms/${id}`, { method: 'DELETE' });
 }
