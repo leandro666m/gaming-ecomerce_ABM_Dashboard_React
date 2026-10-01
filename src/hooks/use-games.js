@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createGame, deleteGame, editGame, fetchGames, normalizeGamePayload } from '../API/games';
+import { authorizationErrorMessage } from '../API/authorization';
 import { fallbackGames } from '../API/seed-data';
 
 const API_FALLBACK_NOTICE = 'API no disponible: se muestran datos de ejemplo. Configurá VITE_API_URL para conectar el backend.';
@@ -19,7 +20,12 @@ export function useGames() {
       const created = await createGame(values);
       setGames((current) => [created, ...current]);
       setNotice('Juego creado correctamente.');
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'crear juegos');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       const localGame = { ...normalizeGamePayload(values), id: Date.now() };
       setGames((current) => [localGame, ...current]);
       setNotice('Juego guardado localmente. No se pudo conectar al backend.');
@@ -34,7 +40,12 @@ export function useGames() {
         game.id === values.id ? { ...localGame, ...updated } : game
       ));
       setNotice('Juego actualizado correctamente.');
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'editar juegos');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       setGames((current) => current.map((game) =>
         game.id === values.id ? localGame : game
       ));
@@ -45,7 +56,12 @@ export function useGames() {
   const removeGame = async (id) => {
     try {
       await deleteGame(id);
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'eliminar juegos');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       setNotice('Eliminado solo de la vista local.');
     }
     setGames((current) => current.filter((game) => game.id !== id));

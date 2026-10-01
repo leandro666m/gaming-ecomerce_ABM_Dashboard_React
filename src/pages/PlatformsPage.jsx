@@ -4,9 +4,11 @@ import { PlatformForm } from '../components/forms/PlatformForm';
 import { Modal } from '../components/forms/ModalForms';
 import { useAdminHeaderAction } from '../components/layout/AdminLayout';
 import { SectionHeader, CardGrid, PlatformCard, IconButton } from '../components/ui/dashboard-primitives';
+import { useAuth } from '../auth/AuthContext';
 
 
 export default function PlatformsPage({ platforms, onDelete, savePlatform, updatePlatform }) {
+  const { isAdmin } = useAuth();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingPlatformId, setEditingPlatformId] = useState(null);
@@ -46,10 +48,10 @@ export default function PlatformsPage({ platforms, onDelete, savePlatform, updat
     <CardGrid>{orderedPlatforms.map((platform) =>
 
       <PlatformCard key={platform.id}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          {isAdmin && <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <IconButton onClick={() => onDelete(platform.id)} aria-label="Eliminar plataforma" > <Trash2 size={16}/> </IconButton>
             <IconButton onClick={() => { setEditingPlatformId(platform.id); setIsFormOpen(true); }} aria-label="Editar plataforma"> <Pen size={16} /> </IconButton>
-          </div>
+          </div>}
         
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             {platform.iconUrl ? ( <img src={platform.iconUrl} alt="" width="54" height="54" /> ) : ( <Tag size={20} /> )}

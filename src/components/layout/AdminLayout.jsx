@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { Gamepad2, Plus, X } from 'lucide-react';
+import { Gamepad2, LogOut, Plus, X } from 'lucide-react';
 import styled from 'styled-components';
 import { apiUrl } from '../../API/request';
 
@@ -18,7 +18,7 @@ export function useAdminHeaderAction(onClick, label) {
   }, [label, onClick, setAction]);
 }
 
-export function AdminLayout({ navigation, activeSection, onNavigate, title, notice, onDismiss, children }) {
+export function AdminLayout({ navigation, activeSection, onNavigate, title, notice, onDismiss, userRole, onLogout, children }) {
   const [action, setAction] = useState(null);
 
   return (
@@ -34,7 +34,9 @@ export function AdminLayout({ navigation, activeSection, onNavigate, title, noti
             <NavItem key={key} $active={activeSection === key} onClick={() => onNavigate(key)}>  <Icon size={18} />  {label}  </NavItem>)}
           </Nav>
 
-          <SidebarFooter>Panel de administración<br />
+          <SidebarFooter>Sesión: {userRole}<br />
+            <LogoutButton onClick={onLogout}><LogOut size={14} /> Cerrar sesión</LogoutButton><br />
+            Panel de administración<br />
             <small>API: {apiUrl || 'no configurada'}</small>
           </SidebarFooter>
         </Sidebar>
@@ -63,6 +65,7 @@ const Brand = styled.div`font-weight:800; letter-spacing:.08em; display:flex; al
 const Nav = styled.nav`margin-top:52px; display:grid; gap:8px;`;
 const NavItem = styled.button`display:flex; align-items:center; gap:12px; padding:12px; border:0; border-radius:10px; text-align:left; color:${({ $active, theme }) => $active ? theme.colors.text : theme.colors.muted}; background:${({ $active, theme }) => $active ? theme.colors.surfaceMuted : 'transparent'}; cursor:pointer;`;
 const SidebarFooter = styled.div`margin-top:auto; color:${({ theme }) => theme.colors.muted}; font-size:12px; line-height:1.7; overflow-wrap:anywhere;`;
+const LogoutButton = styled.button`display:inline-flex;align-items:center;gap:6px;margin:8px 0;padding:0;border:0;color:${({ theme }) => theme.colors.muted};background:transparent;cursor:pointer;font:inherit;`;
 const Main = styled.main`max-width:1240px; width:100%; padding:42px 52px; margin:0 auto;`;
 const Header = styled.header`display:flex; justify-content:space-between; align-items:center; margin-bottom:36px;`;
 const Eyebrow = styled.div`font-size:11px; font-weight:700; letter-spacing:.14em; color:${({ theme }) => theme.colors.secondary};`;

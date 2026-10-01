@@ -4,9 +4,11 @@ import { GameForm } from '../components/forms/GameForm';
 import { Modal } from '../components/forms/ModalForms';
 import { useAdminHeaderAction } from '../components/layout/AdminLayout';
 import { SectionHeader, SearchBox, TableCard, Table, GameCell, CoverPlaceholder, Badge, IconButton, Empty } from '../components/ui/dashboard-primitives';
+import { useAuth } from '../auth/AuthContext';
 
 
 export default function GamesPage({ games, platforms, onDelete, saveGame, updateGame }) {
+  const { isAdmin } = useAuth();
 
   const [query, setQuery] = useState('');
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -74,8 +76,10 @@ export default function GamesPage({ games, platforms, onDelete, saveGame, update
             <td>{game.discount || 0}%</td>
             <td>{game.releaseDate || '—'}</td>
             <td>
-              <IconButton onClick={() => onDelete(game.id)} aria-label="Eliminar juego"> <Trash2 size={16} /> </IconButton>
-              <IconButton onClick={() => { setEditingGameId(game.id); setIsFormOpen(true); }} aria-label="Editar juego"> <Pen size={16} /> </IconButton>
+              {isAdmin && <>
+                <IconButton onClick={() => onDelete(game.id)} aria-label="Eliminar juego"> <Trash2 size={16} /> </IconButton>
+                <IconButton onClick={() => { setEditingGameId(game.id); setIsFormOpen(true); }} aria-label="Editar juego"> <Pen size={16} /> </IconButton>
+              </>}
             </td>
           </tr>)}
 
@@ -103,7 +107,7 @@ export default function GamesPage({ games, platforms, onDelete, saveGame, update
           screenshots: Array.isArray(editingGame.screenshots) ? editingGame.screenshots.join('\n') : editingGame.screenshots || '',
           platformId: editingGame.platformId ?? platforms[0]?.id ?? '',
         } : undefined}
-        isEditing={Boolean(editingGame)}
+        isEditing={!!editingGame}
         onSubmit={handleSubmit}
         onCancel={closeForm}
       />

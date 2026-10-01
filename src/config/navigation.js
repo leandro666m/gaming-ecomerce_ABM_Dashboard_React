@@ -6,4 +6,5 @@ export const navigationItems = [
   { key: 'clients', label: 'Clientes', icon: Users },
   { key: 'games', label: 'Catálogo', icon: Package },
   { key: 'platforms', label: 'Plataformas', icon: Tag },
+  { key: 'users', label: 'Usuarios', icon: Users },
 ];

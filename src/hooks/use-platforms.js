@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPlatform, deletePlatform, fetchPlatforms, editPlatform } from '../API/platforms';
+import { authorizationErrorMessage } from '../API/authorization';
 import { fallbackPlatforms } from '../API/seed-data';
 
 const API_FALLBACK_NOTICE = 'API no disponible: se muestran datos de ejemplo. Configurá VITE_API_URL para conectar el backend.';
@@ -20,7 +21,12 @@ export function usePlatforms() {
       const created = await createPlatform(values);
       setPlatforms((current) => [created, ...current]);
       setNotice('Plataforma creada correctamente.');
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'crear plataformas');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       setPlatforms((current) => [{ ...values, id: Date.now() }, ...current]);
       setNotice('Plataforma guardada localmente. No se pudo conectar al backend.');
     }
@@ -33,7 +39,12 @@ export function usePlatforms() {
         platform.id === values.id ? { ...platform, ...updated } : platform
       ));
       setNotice('Plataforma actualizada correctamente.');
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'editar plataformas');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       setPlatforms((current) => current.map((platform) =>
         platform.id === values.id ? { ...values, id: platform.id } : platform
       ));
@@ -45,7 +56,12 @@ export function usePlatforms() {
     try {
       await deletePlatform(id);
       setPlatforms((current) => current.filter((platform) => platform.id !== id));
-    } catch {
+    } catch (error) {
+      const authError = authorizationErrorMessage(error, 'eliminar plataformas');
+      if (authError) {
+        setNotice(authError);
+        return;
+      }
       setNotice('La plataforma tiene juegos asociados.');
     }
   };
